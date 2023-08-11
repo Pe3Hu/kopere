@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6nb2w54wmf2f"]
+
+[ext_resource type="Script" path="res://scene/1/stein.gd" id="1_hprya"]
+
+[node name="Stein" type="Polygon2D"]
+script = ExtResource("1_hprya")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0.0352941, 0.0352941, 0.0352941, 1)
+offset_left = -12.0
+offset_top = -11.0
+offset_right = 13.0
+offset_bottom = 12.0
+horizontal_alignment = 1
+vertical_alignment = 1
