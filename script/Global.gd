@@ -17,6 +17,7 @@ func init_num() -> void:
 	num.index = {}
 	num.index.unit = 0
 	num.index.pattern = 0
+	num.index.mechanism = 0
 	
 	num.size = {}
 	num.size.unit = {}
@@ -169,6 +170,8 @@ func init_arr() -> void:
 			Vector2( 0,-1)
 		]
 	]
+	
+	arr.team = ["attackers", "defenders"]
 
 
 func init_node() -> void:
@@ -176,19 +179,25 @@ func init_node() -> void:
 
 
 func init_scene() -> void:
-	scene.gebirge = load("res://scene/0/gebirge.tscn")
+	#scene.gebirge = load("res://scene/0/gebirge.tscn")
 	#scene.framework = load("res://scene/0/framework.tscn")
 	#scene.module = load("res://scene/0/module.tscn")
 	#scene.pattern = load("res://scene/1/pattern.tscn")
-	scene.unit = load("res://scene/1/unit.tscn")
+	#scene.unit = load("res://scene/1/unit.tscn")
+	
+	scene.factory = load("res://scene/98/factory.tscn")
+	scene.framework = load("res://scene/98/framework.tscn")
+	scene.module = load("res://scene/98/module.tscn")
+	scene.unit = load("res://scene/98/unit.tscn")
+	scene.pattern = load("res://scene/98/pattern.tscn")
 	
 	
-	scene.factory = load("res://scene/2/factory.tscn")
-	scene.framework = load("res://scene/2/framework.tscn")
-	scene.module = load("res://scene/2/module.tscn")
-	scene.unit = load("res://scene/2/unit.tscn")
-	scene.pattern = load("res://scene/2/pattern.tscn")
-	
+	scene.firehill = load("res://scene/1/firehill.tscn")
+	scene.milestone = load("res://scene/1/milestone.tscn")
+	scene.target = load("res://scene/2/target.tscn")
+	scene.mechanism = load("res://scene/2/mechanism.tscn")
+	scene.cell = load("res://scene/3/cell.tscn")
+	scene.reel = load("res://scene/3/reel.tscn")
 	
 
 

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm6bi01tnnund"]
+
+[ext_resource type="Script" path="res://scene/99/berggipfel.gd" id="1_5n81e"]
+
+[node name="Berggipfel" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_5n81e")
+
+[node name="BG" type="ColorRect" parent="."]
+visible = false
+layout_mode = 2
+color = Color(0.709804, 0.709804, 0.709804, 1)
+
+[node name="Stein" type="Node2D" parent="."]

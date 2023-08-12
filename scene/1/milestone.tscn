@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://8o26ugcco6lb"]
+
+[ext_resource type="Script" path="res://scene/1/milestone.gd" id="1_vpqeq"]
+[ext_resource type="FontFile" uid="uid://8erc6oqf1hw7" path="res://asset/font/neuropolitical rg.otf" id="2_kdkdf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
+
+[node name="Milestone" type="MarginContainer"]
+custom_minimum_size = Vector2(10, 70)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_vpqeq")
+
+[node name="BG" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+alignment = 2
+
+[node name="Mechanism" type="GridContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Remoteness" type="Label" parent="VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_kdkdf")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

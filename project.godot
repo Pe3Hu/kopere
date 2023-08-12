@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="panga"
-run/main_scene="res://scene/game/Game.tscn"
+config/name="kopere"
+run/main_scene="res://scene/0/Game.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://asset/icon.svg"
 

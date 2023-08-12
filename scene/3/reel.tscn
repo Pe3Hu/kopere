@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://dylj74370ioi3"]
+
+[ext_resource type="Script" path="res://scene/3/reel.gd" id="1_tirjg"]
+[ext_resource type="FontFile" uid="uid://8erc6oqf1hw7" path="res://asset/font/neuropolitical rg.otf" id="2_e24kb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpe7t"]
+bg_color = Color(0.435294, 0.615686, 0.619608, 1)
+
+[node name="Reel" type="Control"]
+clip_children = 1
+clip_contents = true
+custom_minimum_size = Vector2(50, 150)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_tirjg")
+
+[node name="BG" type="Panel" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bpe7t")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 19.0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 30.0
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_e24kb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Cells" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_top = -50.0
+offset_bottom = -50.0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
