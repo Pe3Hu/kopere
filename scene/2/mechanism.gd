@@ -141,6 +141,3 @@ func get_goals_by_unit(unit_: MarginContainer, scatter_: int) -> Variant:
 		goals.append(goal)
 	
 	return goals
-
-
-

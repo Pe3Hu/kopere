@@ -1,3 +1,6 @@
+Node2D
+Label
+Polygon2D
 HBoxContainer
 VBoxContainer
 Control
@@ -7,11 +10,8 @@ GridContainer
 ProgressBar
 Panel
 AnimationPlayer
-Node2D
 Node
-Label
 ColorRect
-Polygon2D
 Button
 TextureProgressBar
 Sprite2D

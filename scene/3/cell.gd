@@ -40,5 +40,3 @@ func set_apparatus() -> void:
 	apparatus.pb.value = unit.apparatus.pb.max_value
 	apparatus.label.text = str(unit.apparatus.pb.max_value)
 	apparatus.update_color()
-	
- 

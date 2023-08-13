@@ -18,3 +18,6 @@ res://scene/3/reel.gd
 res://scene/2/unit.tscn
 res://scene/2/unit.gd
 res://scene/2/indicator.gd
+res://scene/2/hex.tscn
+res://scene/2/hex.gd
+res://asset/json/kopere_skeleton.json

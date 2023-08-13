@@ -79,8 +79,12 @@ func init_dict() -> void:
 		]
 	]
 	dict.neighbor.cube = [
-		Vector3(+1, 0, -1), Vector3(+1, -1, 0), Vector3(0, -1, +1), 
-		Vector3(-1, 0, +1), Vector3(-1, +1, 0), Vector3(0, +1, -1), 
+		Vector3(0, -1, +1),
+		Vector3(+1, -1, 0),
+		Vector3(+1, 0, -1),
+		Vector3(0, +1, -1), 
+		Vector3(-1, +1, 0),
+		Vector3(-1, 0, +1),   
 	]
 	
 	
@@ -92,6 +96,7 @@ func init_dict() -> void:
 	
 	init_corner()
 	init_pentahex()
+	init_skeleton()
 	
 
 
@@ -129,6 +134,32 @@ func init_pentahex() -> void:
 	
 	for key in dict_.keys():
 		dict.pentahex.indexs[key] = dict_[key]
+
+
+func init_skeleton() -> void:
+	dict.skeleton = {}
+	dict.skeleton.title = {}
+	var path = "res://asset/json/kopere_skeleton.json"
+	var array = load_data(path)
+	var rings = ["I","II","III"]
+	
+	for data in array:
+		var title = int(data.title)
+		dict.skeleton.title[title] = {}
+		dict.skeleton.title[title].ring = {}
+		dict.skeleton.title[title].thickness = {}
+		
+		data.erase(title)
+		
+		for ring in rings:
+			dict.skeleton.title[title].ring[ring] = data[ring]
+			data.erase(ring)
+		
+		for key in data:
+			var index = int(key)
+			
+			if data[key] != 0:
+				dict.skeleton.title[title].thickness[index] = data[key]
 
 
 func init_title() -> void:
@@ -169,8 +200,9 @@ func init_scene() -> void:
 	scene.firehill = load("res://scene/1/firehill.tscn")
 	scene.milestone = load("res://scene/1/milestone.tscn")
 	scene.icon = load("res://scene/1/icon.tscn")
-	scene.target = load("res://scene/2/target.tscn")
 	scene.mechanism = load("res://scene/2/mechanism.tscn")
+	scene.target = load("res://scene/2/target.tscn")
+	scene.hex = load("res://scene/2/hex.tscn")
 	scene.unit = load("res://scene/2/unit.tscn")
 	scene.reel = load("res://scene/3/reel.tscn")
 	scene.cell = load("res://scene/3/cell.tscn")

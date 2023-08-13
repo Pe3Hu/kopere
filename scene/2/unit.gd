@@ -8,10 +8,12 @@ extends MarginContainer
 
 var index = null
 var target = null
+var hex = null
 var vulnerable = false
 var ring = null
 var grid = null
 var neighbors = {}
+var thickness = null
 
 
 func _ready():
@@ -45,11 +47,12 @@ func set_index(index_: int) -> void:
 
 
 func set_armor_thickness(layers_: int) -> void:
-	var thickness = 5 * layers_
+	thickness = 5 * layers_
 	armor.pb.max_value = thickness
 	armor.pb.value = thickness
 	armor.label.text = str(thickness)
 	set_apparatus(100)
+	hex.update_color()
 
 
 func set_apparatus(max_: int) -> void:

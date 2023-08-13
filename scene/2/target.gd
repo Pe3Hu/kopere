@@ -2,6 +2,7 @@ extends MarginContainer
 
 
 @onready var rings = $Rings
+@onready var hexs = $Hexs
 
 var units = {}
 
@@ -10,13 +11,12 @@ func _ready() -> void:
 	init_units()
 
 
-
 func init_units() -> void:
 	var l = 6
 	var index = 0
 	add_unit(Vector3())
 	
-	for _i in 2:
+	for _i in 3:
 		var ring = rings.get_children().back()
 		
 		for unit in ring.get_children():
@@ -36,10 +36,23 @@ func add_unit(grid_: Vector3) -> void:
 	units[unit.grid] = unit
 	unit.ring = get_ring_by_grid(unit.grid)
 	unit.set_index(units.keys().size() - 1)
-	unit.set_armor_thickness(3)
 	remove_child(unit)
 	var ring = get_ring(unit.ring)
 	ring.add_child(unit)
+	
+	var skeleton_title = 0
+	var hex = Global.scene.hex.instantiate()
+	hexs.add_child(hex)
+	hex.unit = unit
+	unit.hex = hex
+	hex.position = get_hex_position_by_grid(unit.grid)
+	hex.label.text = str(unit.index)
+	
+	if Global.dict.skeleton.title[skeleton_title].thickness.has(unit.index):
+		var thickness = Global.dict.skeleton.title[skeleton_title].thickness[unit.index]
+		unit.set_armor_thickness(thickness)
+	else:
+		hex.visible = false
 
 
 func get_ring_by_grid(grid_: Vector3) -> int:
@@ -60,6 +73,23 @@ func get_ring(layer_: int) -> GridContainer:
 		ring = rings.get_node(str(layer_))
 	
 	return ring
+
+
+func get_hex_position_by_grid(grid_: Vector3) -> Vector2:
+	var vector = Vector2()
+	var ls = []
+	ls.append(grid_.x)
+	ls.append(grid_.y)
+	ls.append(grid_.z)
+	var angle = {}
+	angle.step = PI * 2 / ls.size()
+	
+	for _i in ls.size():
+		var l = ls[_i]
+		angle.current = angle.step * (_i)
+		vector += Vector2.from_angle(angle.current) * Global.num.size.unit.R * l
+		
+	return vector  
 
 
 func add_neighbors(unit_: MarginContainer) -> void:
@@ -83,51 +113,3 @@ func update_neighbors() -> void:
 				if !unit.neighbors.has(neighbor):
 					unit.neighbors[neighbor] = direction
 					neighbor.neighbors[unit] = -direction
-
-
-func init_units_old() -> void:
-	var lengths = []
-	var index = 0
-	var n = 6
-	var layers = {}
-	layers.standard = [4,4,4,5,5]
-	layers.options = []
-	
-	for _i in 4:
-		var length = _i * n
-		lengths.append(length)
-	
-	lengths[0] = 1
-	
-	for _i in lengths.size():
-		var length = lengths[_i]
-		var ring = GridContainer.new()
-		ring.columns = n
-		ring.name = str(_i)
-		rings.add_child(ring)
-		
-		for _j in length:
-			var unit = Global.scene.unit.instantiate()
-			ring.add_child(unit)
-			units.append(unit)
-			unit.target = self
-			unit.ring = _i
-			unit.set_index(index)
-			index += 1
-		
-		for _j in _i:
-			var unit = ring.get_child(_j)
-			unit.set_armor_thickness(3)
-		
-		if _i == 0:
-			var unit = ring.get_child(0)
-			unit.set_armor_thickness(3)
-		
-		for unit in ring.get_children():
-			if unit.armor.label.text == "":
-				if layers.options.is_empty():
-					layers.options.append_array(layers.standard)
-				
-				var layer = layers.options.pick_random()
-				unit.set_armor_thickness(layer)
-				layers.options.erase(layer)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5o3l2n5k1o5o"]
+
+[ext_resource type="Script" path="res://scene/2/hex.gd" id="1_6b7xm"]
+
+[node name="Hex" type="Polygon2D"]
+script = ExtResource("1_6b7xm")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
