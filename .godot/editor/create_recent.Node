@@ -1,10 +1,10 @@
-Timer
-VBoxContainer
-GridContainer
 HBoxContainer
-ProgressBar
-MarginContainer
+VBoxContainer
 Control
+MarginContainer
+Timer
+GridContainer
+ProgressBar
 Panel
 AnimationPlayer
 Node2D

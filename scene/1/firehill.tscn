@@ -34,11 +34,31 @@ theme_override_fonts/font = ExtResource("2_3kt26")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Milestones" type="HBoxContainer" parent="."]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 alignment = 1
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Defenders" type="VBoxContainer" parent="VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Milestones" type="HBoxContainer" parent="VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Attackers" type="VBoxContainer" parent="VBox/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Reels" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

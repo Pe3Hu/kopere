@@ -30,7 +30,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
 layout_mode = 2
 alignment = 2
 
-[node name="Mechanism" type="GridContainer" parent="VBox"]
+[node name="Mechanisms" type="GridContainer" parent="VBox"]
 layout_mode = 2
 
 [node name="Remoteness" type="Label" parent="VBox"]

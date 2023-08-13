@@ -78,6 +78,17 @@ func init_dict() -> void:
 			Vector2( 0,-1)
 		]
 	]
+	dict.neighbor.cube = [
+		Vector3(+1, 0, -1), Vector3(+1, -1, 0), Vector3(0, -1, +1), 
+		Vector3(-1, 0, +1), Vector3(-1, +1, 0), Vector3(0, +1, -1), 
+	]
+	
+	
+	
+	dict.team = {}
+	dict.team.opponent = {}
+	dict.team.opponent["attackers"] = "defenders"
+	dict.team.opponent["defenders"] = "attackers"
 	
 	init_corner()
 	init_pentahex()
@@ -134,44 +145,7 @@ func init_title() -> void:
 
 
 func init_arr() -> void:
-	arr.neighbor = [
-		[
-			Vector2( 1,-1), 
-			Vector2( 1, 0), 
-			Vector2( 1, 1), 
-			Vector2( 0, 1), 
-			Vector2(-1, 0),
-			Vector2( 0,-1)
-		],
-		[
-			Vector2( 0,-1),
-			Vector2( 1, 0),
-			Vector2( 0, 1),
-			Vector2(-1, 1),
-			Vector2(-1, 0),
-			Vector2(-1,-1)
-		]
-	]
-	arr.spin = [
-		[
-			Vector2( 1,-1), 
-			Vector2( 0, 1), 
-			Vector2( 0, 1), 
-			Vector2( 0, 1), 
-			Vector2(-1,-1),
-			Vector2( 0,-1)
-		],
-		[
-			Vector2( 1, 1),
-			Vector2( 0, 1),
-			Vector2(-1, 1),
-			Vector2( 0,-1),
-			Vector2( 0,-1),
-			Vector2( 0,-1)
-		]
-	]
-	
-	arr.team = ["attackers", "defenders"]
+	pass
 
 
 func init_node() -> void:
@@ -194,16 +168,24 @@ func init_scene() -> void:
 	
 	scene.firehill = load("res://scene/1/firehill.tscn")
 	scene.milestone = load("res://scene/1/milestone.tscn")
+	scene.icon = load("res://scene/1/icon.tscn")
 	scene.target = load("res://scene/2/target.tscn")
 	scene.mechanism = load("res://scene/2/mechanism.tscn")
-	scene.cell = load("res://scene/3/cell.tscn")
+	scene.unit = load("res://scene/2/unit.tscn")
 	scene.reel = load("res://scene/3/reel.tscn")
+	scene.cell = load("res://scene/3/cell.tscn")
+	
 	
 
 
 func init_vec():
 	vec.size = {}
 	init_window_size()
+	
+	vec.size.unit = Vector2(80, 24)
+	vec.size.cell = Vector2(vec.size.unit)
+	vec.size.letter2 = Vector2(31, 23)
+	vec.size.letter3 = Vector2(46, 23)
 
 
 func init_window_size():

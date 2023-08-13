@@ -5,10 +5,8 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
-[node name="Target" type="Control"]
+[node name="Target" type="MarginContainer"]
 custom_minimum_size = Vector2(5, 5)
-layout_mode = 3
-anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 4
@@ -17,24 +15,16 @@ script = ExtResource("1_w35yb")
 
 [node name="BG" type="Panel" parent="."]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7paps")
 
 [node name="Label" type="Label" parent="."]
 visible = false
 layout_mode = 2
-offset_left = 19.0
-offset_top = 10.0
-offset_right = 20.0
-offset_bottom = 30.0
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_eucxn")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Rings" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
 alignment = 1

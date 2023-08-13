@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://tu8h8pg4rd2l"]
+[gd_scene load_steps=4 format=3 uid="uid://c45q01tv3ems6"]
 
-[ext_resource type="Script" path="res://scene/3/cell.gd" id="1_iwim4"]
-[ext_resource type="PackedScene" uid="uid://dpmrsb7bqrheh" path="res://scene/1/icon.tscn" id="2_addge"]
+[ext_resource type="Script" path="res://scene/2/unit.gd" id="1_w2ccj"]
+[ext_resource type="PackedScene" uid="uid://dpmrsb7bqrheh" path="res://scene/1/icon.tscn" id="2_sswfc"]
 [ext_resource type="PackedScene" uid="uid://btjuadb2b7bqc" path="res://scene/2/indicator.tscn" id="3_sfhri"]
 
-[node name="Cell" type="MarginContainer"]
-custom_minimum_size = Vector2(5, 5)
+[node name="Unit" type="MarginContainer"]
+custom_minimum_size = Vector2(40, 30)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -19,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_iwim4")
+script = ExtResource("1_w2ccj")
 
 [node name="BG" type="Panel" parent="."]
 layout_mode = 2
@@ -28,7 +28,7 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="Icon" parent="HBox" instance=ExtResource("2_addge")]
+[node name="Icon" parent="HBox" instance=ExtResource("2_sswfc")]
 layout_mode = 2
 
 [node name="Armor" parent="HBox" instance=ExtResource("3_sfhri")]

@@ -1,7 +1,10 @@
 extends MarginContainer
 
 
-@onready var milestones = $Milestones
+@onready var reels = $VBox/Reels 
+@onready var milestones = $VBox/HBox/Milestones
+@onready var defenders = $VBox/HBox/Defenders
+@onready var attackers = $VBox/HBox/Attackers
 
 var teams = {}
 var max_remoteness = 0
@@ -23,13 +26,13 @@ func init_milestones() -> void:
 
 
 func init_teams() -> void:
-	for team in Global.arr.team:
+	for team in Global.dict.team.opponent:
 		teams[team] = []
 	
 	var mechanism = add_mechanism()
 	add_mechanism_to_team("attackers", mechanism)
 	mechanism = add_mechanism()
-	add_mechanism_to_team("attackers", mechanism)
+	add_mechanism_to_team("defenders", mechanism)
 
 
 func add_mechanism() -> MarginContainer:
@@ -44,18 +47,28 @@ func add_mechanism_to_team(team_: String, mechanism_: MarginContainer) -> void:
 	match team_:
 		"attackers":
 			remoteness = 9
+			attackers.add_child(mechanism_)
 		"defenders":
 			remoteness = 0
+			defenders.add_child(mechanism_)
+			mechanism_.visible = false
 	
 	teams[team_].append(mechanism_)
 	mechanism_.firehill = self
+	mechanism_.team = team_
 	mechanism_.reach_milestone(str(remoteness))
 
 
 func _on_timer_timeout():
 	attackers_move()
+	defenders_shoot()
 
 
 func attackers_move() -> void:
 	for mechanism in teams["attackers"]:
 		mechanism.move()
+
+
+func defenders_shoot() -> void:
+	for mechanism in teams["defenders"]:
+		mechanism.prepare_shoot()

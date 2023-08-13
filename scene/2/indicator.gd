@@ -6,6 +6,15 @@ extends MarginContainer
 @onready var label = $Label
 
 
+func _ready():
+	update_size()
+
+
+func update_size() -> void:
+	var vector = Vector2(Global.vec.size.letter3)
+	custom_minimum_size = vector
+
+
 func update_color() -> void:
 	var max_h = 360.0
 	var s = 0.75
@@ -35,5 +44,4 @@ func add_value(value_: int) -> void:
 	
 	if pb.value < pb.min_value:
 		pb.value = pb.min_value
-	
-	
+

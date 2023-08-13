@@ -9,7 +9,7 @@ bg_color = Color(0.435294, 0.615686, 0.619608, 1)
 [node name="Reel" type="Control"]
 clip_children = 1
 clip_contents = true
-custom_minimum_size = Vector2(50, 150)
+custom_minimum_size = Vector2(5, 5)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 50.0

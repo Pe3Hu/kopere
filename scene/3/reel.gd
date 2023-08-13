@@ -11,15 +11,29 @@ var tick = null
 var time = null
 var stats = {}
 var counter = 0
+var goals = []
+var mechanism = null
 
 
 func _ready() -> void:
-	time = Time.get_unix_time_from_system()
-	init_cells()
+	#time = Time.get_unix_time_from_system()
+	#init_cells()
+	pass
+
+
+func add_goals(goals_: Array) -> void:
+	goals.append_array(goals_)
+	update_size()
 	reset()
 
 
-func init_cells() -> void:
+func update_size() -> void:
+	var vector = Global.vec.size.unit + Vector2()
+	vector.y *= 3
+	custom_minimum_size = vector
+
+
+func init_units() -> void:
 	var n = 7
 	
 	for _i in n:
@@ -27,17 +41,28 @@ func init_cells() -> void:
 		cells.add_child(cell)
 		cell.set_index(_i)
 	
-	cells.position.y = -100
+	reset()
 
 
 func reset() -> void:
+	shuffle_goals()
 	pace = 100
 	tick = 0
-	timer.start()
+	#timer.start()
+	cells.position.y = -Global.vec.size.unit.y * 2
+
+
+func shuffle_goals() -> void:
+	for cell in cells.get_children():
+		cells.remove_child(cell)
+		cell.queue_free()
 	
-	for _i in cells.get_child_count():
-		var cell = cells.get_child(_i)
-		cell.set_index(_i)
+	goals.shuffle()
+	
+	for unit in goals:
+		var cell = Global.scene.cell.instantiate()
+		cells.add_child(cell)
+		cell.set_unit(unit)
 
 
 func decelerate_spin() -> void:
@@ -61,27 +86,24 @@ func _on_timer_timeout():
 	if pace >= 10:
 		var time = 1.0 / pace
 		tween = create_tween()
-		tween.tween_property(cells, "position", Vector2(0, -50), time)
+		tween.tween_property(cells, "position", Vector2(0, -Global.vec.size.unit.y), time)
 		tween.tween_callback(pop_up)
 		decelerate_spin()
-#	else:
-#		print("end at", Time.get_unix_time_from_system() - time)
-#
-#			var current_cell = cells.get_child(3)
-#			#print(current_cell.index)
-#			if !stats.has(current_cell.index):
-#				stats[current_cell.index] = 0
-#
-#			stats[current_cell.index] += 1
-#			counter += 1
-#			reset()
-#	else:
-#		print(stats)
-
+	else:
+		#print("end at", Time.get_unix_time_from_system() - time)
+		var unit = cells.get_child(3).unit
+		print(unit.index)
+		mechanism.shoot(unit)
 
 
 func pop_up() -> void:
 	var cell = cells.get_child(cells.get_child_count() - 1)
 	cells.move_child(cell, 0)
-	cells.position.y += -50
+	cells.position.y += -Global.vec.size.unit.y
 	timer.start()
+
+
+func get_goal_rnd() -> MarginContainer:
+	var goal = goals.pick_random()
+	
+	return goal

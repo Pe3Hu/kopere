@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7paps"]
 
 [node name="Mechanism" type="MarginContainer"]
-custom_minimum_size = Vector2(5, 5)
+custom_minimum_size = Vector2(50, 50)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -36,5 +36,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Target" parent="." instance=ExtResource("3_ww5oy")]
+layout_mode = 2
+
+[node name="Icons" type="Control" parent="."]
 visible = false
 layout_mode = 2
