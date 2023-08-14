@@ -23,6 +23,7 @@ func _ready() -> void:
 	ifm.label.text = label.text
 	target = Global.scene.target.instantiate()
 	icons.add_child(target)
+	target.mechanism = self
 
 
 func move() -> void:
@@ -52,23 +53,20 @@ func prepare_shoot() -> void:
 	var foe = select_foe()
 	
 	if foe != null:
-		icons.remove_child(target)
-		firehill.targets.add_child(target)
+		foe.icons.remove_child(foe.target)
+		firehill.targets.add_child(foe.target)
 		bullet = select_bullet()
 		var aim = select_aim()
 		var hex = get_hex_by_aim(foe.target, aim)
 		var scatter = 1
-		#var goals = get_goals_by_hex(hex, scatter)
 		var goals = get_all_hexs_around_aim(hex, scatter)
+		add_misses(goals, scatter)
 		var reel = Global.scene.reel.instantiate()
 		firehill.reels.add_child(reel)
 		reel.mechanism = self
 		reel.add_goals(goals)
-		reel.timer.start()
-
-
-func shoot(goal_: MarginContainer) -> void:
-	pass
+		reel.skip_animation()
+		#reel.timer.start()
 
 
 func select_foe() -> Variant:
@@ -78,6 +76,9 @@ func select_foe() -> Variant:
 	
 	if !foes.is_empty():
 		foe = foes.front()
+		
+		if foe.target.integrity.pb.value <= 0:
+			foe = null
 	
 	return foe
 
@@ -89,7 +90,7 @@ func select_bullet() -> Variant:
 
 
 func select_aim() -> Variant:
-	var aim = "rapid-fire"
+	var aim = "rapid-fire"#"bullseye"
 	
 	return aim
 
@@ -105,9 +106,6 @@ func get_hex_by_aim(target_: Control, aim_: String) -> Variant:
 			var grid = target_.grids.keys().pick_random()
 			var rnd_hex = target_.grids[grid]
 			ring = rnd_hex.ring
-			
-			
-			ring = 1
 	
 	if ring != null:
 		var hexs = target_.rings[ring]
@@ -128,35 +126,63 @@ func get_all_hexs_around_aim(hex_: Polygon2D, scatter_: int) -> Variant:
 						goals[neighbor] = _i + 1
 	
 	return goals.keys()
-	
 
 
-func get_goals_by_hex(hex_: MarginContainer, scatter_: int) -> Variant:
-	var goals = []
-	var rings = [hex_.ring]
+func add_misses(goals_: Array, scatter_: int) -> void:
+	var scope = Global.dict.scope.scatter[scatter_]
 	
-	if scatter_ == 1:
-		if hex_.ring == 0:
-			for _i in 6:
-				rings.append(1)
+	while scope > goals_.size():
+		goals_.append(null)
+
+
+func shoot(goal_: MarginContainer) -> void:
+	if goal_.apparatus.pb.value > 0:
+		var breach = false
+		var limits = {} 
+		limits.penetration = 10
+		limits.armor = goal_.armor.pb.value
+		var damage = {}
+		
+		if limits.armor > 0:
+			var roll = {}
+			
+			match bullet:
+				"standard":
+					limits.penetration += 0
+			
+			for key in limits:
+				Global.rng.randomize()
+				roll[key] = Global.rng.randi_range(0, limits[key])
+		
+			damage.armor = roll.penetration - roll.armor
+			#print([limits, roll])
+			
+			if roll.penetration > roll.armor:
+				damage.armor = roll.penetration
+			else:
+				damage.armor = floor(sqrt(roll.penetration))
+			
+			goal_.armor.add_value(-damage.armor)
+			
+			if goal_.armor.pb.value <= 0:
+				breach = true
 		else:
-			for _i in 3:
-				var ring = hex_.ring + _i - 1
-				
-				for _j in _i + 1:
-					rings.append(ring)
-	
-	print(rings)
-	
-	var options = {}
-	
-	for ring in rings:
-		if !options.has(ring):
-			options[ring] = []
-			options[ring].append_array(hex_.target.rings.get_node(str(ring)).get_children())
-	
-		var goal = options[ring].pick_random()
-		options[ring].erase(goal)
-		goals.append(goal)
-	
-	return goals
+			breach = true
+		
+		if breach:
+			damage.apparatus = 10
+			goal_.apparatus.add_value(-damage.apparatus)
+		
+		firehill.timer.start()
+	else:
+		through()
+
+
+func miss() -> void:
+	firehill.timer.start()
+
+
+func through() -> void:
+	firehill.timer.start()
+
+

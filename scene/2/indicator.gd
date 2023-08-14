@@ -5,6 +5,8 @@ extends MarginContainer
 @onready var bg = $BG
 @onready var label = $Label
 
+var unit = null
+
 
 func _ready():
 	update_size()
@@ -17,15 +19,17 @@ func update_size() -> void:
 
 func update_color() -> void:
 	var max_h = 360.0
-	var s = 0.75
+	var s = 0.9
 	var v = {}
 	v["fill"] = 1.0
 	v["background"] = 0.5
 	var h = null
 	
 	match name:
+		"Integrity":
+			h = 300.0 / max_h
 		"Armor":
-			h = 120.0 / max_h
+			h = 110.0 / max_h
 		"Apparatus":
 			h = 0.0 / max_h
 	
@@ -37,11 +41,31 @@ func update_color() -> void:
 
 
 func add_value(value_: int) -> void:
-	pb.value += value_
+	var value = value_
 	
-	if pb.value > pb.max_value:
+	if value_ > 0:
+		value = min(value_, pb.max_value - pb.value)
+	else:
+		value = min(value_, pb.value)
+		
+		if name == "Apparatus":
+			unit.hex.target.integrity.add_value(value)
+	
+	pb.value += value
+	
+	if pb.value >= pb.max_value:
 		pb.value = pb.max_value
 	
-	if pb.value < pb.min_value:
+	if pb.value <= pb.min_value:
 		pb.value = pb.min_value
+		
+		if name == "Armor":
+			unit.switch_indicators()
+		
+		if name == "Apparatus" and unit.vulnerable:
+			var vulnerable_damage = -pb.max_value * 3
+			unit.hex.target.integrity.add_value(vulnerable_damage)
+	
+	if name != "Integrity":
+		label.text = str(pb.value)
 

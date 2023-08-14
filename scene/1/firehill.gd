@@ -1,16 +1,18 @@
 extends MarginContainer
 
 
-@onready var reels = $VBox/Reels 
+@onready var reels = $VBox/MC/Reels 
 @onready var milestones = $VBox/HBox/Milestones
 @onready var defenders = $VBox/HBox/Defenders
 @onready var attackers = $VBox/HBox/Attackers
 @onready var targets = $VBox/HBox/Targets
 @onready var mechanisms = $Mechanisms
+@onready var timer = $Timer
 
 
 var teams = {}
 var max_remoteness = 0
+
 
 func _ready() -> void:
 	init_milestones()
@@ -63,7 +65,7 @@ func add_mechanism_to_team(team_: String, mechanism_: MarginContainer) -> void:
 
 
 func _on_timer_timeout():
-	attackers_move()
+	#attackers_move()
 	defenders_shoot()
 
 

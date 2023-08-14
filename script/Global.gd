@@ -87,17 +87,28 @@ func init_dict() -> void:
 		Vector3(-1, 0, +1),   
 	]
 	
-	
-	
 	dict.team = {}
 	dict.team.opponent = {}
 	dict.team.opponent["attackers"] = "defenders"
 	dict.team.opponent["defenders"] = "attackers"
 	
+	
+	init_scope()
 	init_corner()
 	init_pentahex()
 	init_skeleton()
+
+
+func init_scope() -> void:
+	dict.scope = {}
+	dict.scope.scatter = {}
 	
+	for _i in 4:
+		if !dict.scope.scatter.has(_i):
+			dict.scope.scatter[_i] = 1
+		
+		for _j in _i + 1:
+			dict.scope.scatter[_i] += 6 * _j
 
 
 func init_corner() -> void:
@@ -253,7 +264,6 @@ func load_data(path_: String):
 	var json_object = JSON.new()
 	var parse_err = json_object.parse(text)
 	return json_object.get_data()
-
 
 
 func get_random_key(dict_: Dictionary):

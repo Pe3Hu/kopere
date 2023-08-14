@@ -16,6 +16,8 @@ func _ready():
 	bg.set("theme_override_styles/panel", style)
 	
 	hex = get_parent()
+	armor.unit = self
+	apparatus.unit = self
 	armor.update_color()
 	apparatus.update_color()
 	update_size()

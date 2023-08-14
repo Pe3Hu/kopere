@@ -62,7 +62,11 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="Reels" type="HBoxContainer" parent="VBox"]
+[node name="MC" type="MarginContainer" parent="VBox"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="Reels" type="HBoxContainer" parent="VBox/MC"]
 layout_mode = 2
 alignment = 1
 

@@ -2,7 +2,9 @@ extends MarginContainer
 
 
 @onready var hexs = $Hexs
+@onready var integrity = $Integrity
 
+var mechanism = null
 var skeleton = null
 var grids = {}
 var rings = []
@@ -10,11 +12,12 @@ var corners = {}
 
 
 func _ready() -> void:
-	skeleton = 2
+	skeleton = Global.num.index.mechanism
 	corners.min = Vector2()
 	corners.max = Vector2()
 	init_units()
 	update_size()
+	set_integrity()
 
 
 func init_units() -> void:
@@ -32,18 +35,10 @@ func init_units() -> void:
 	
 	for hex in hexs.get_children():
 		if hex.visible:
-			#unit.hex.label.text = str(unit.index)
 			hex.position = get_hex_position_by_grid(hex.grid)
 			update_corners(hex.position)
 		else:
 			hex.clean()
-
-	print(hexs.get_child_count())
-	
-#	var unit = units[Vector3(1, -1, 0)]
-#
-#	for neighbor in unit.neighbors:
-#		neighbor.switch_indicators()
 
 
 func add_hex(grid_: Vector3) -> void:
@@ -61,6 +56,9 @@ func add_hex(grid_: Vector3) -> void:
 	if Global.dict.skeleton.title[skeleton].thickness.has(hex.index):
 		var thickness = Global.dict.skeleton.title[skeleton].thickness[hex.index]
 		hex.unit.set_armor_thickness(thickness)
+		
+		if thickness == 1:
+			hex.unit.vulnerable = true
 	else:
 		hex.visible = false
 
@@ -142,3 +140,14 @@ func update_size() -> void:
 	
 	custom_minimum_size = corners.max - corners.min
 	hexs.position = -corners.min
+
+
+func set_integrity() -> void:
+	integrity.pb.max_value = 0
+	
+	for hex in hexs.get_children():
+		integrity.pb.max_value += hex.unit.apparatus.pb.max_value
+	
+	integrity.pb.value = int(integrity.pb.max_value)
+	integrity.pb.show_percentage = true
+	integrity.update_color()

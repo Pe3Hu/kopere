@@ -29,19 +29,11 @@ func set_vertexs() -> void:
 
 
 func update_color() -> void:
+	var step = 4
 	var max_h = 360.0
 	var s = 0.75
 	var v = 1
-	var h = null
-	
-	match unit.thickness:
-		5:
-			h = 0 / max_h
-		10:
-			h = 60 / max_h
-		15:
-			h = 120 / max_h
-	
+	var h = (180 + unit.thickness * step) / max_h
 	var color_ = Color.from_hsv(h,s,v)
 	set_color(color_)
  
@@ -58,6 +50,11 @@ func clean() -> void:
 	for grid in target.grids:
 		if target.grids[grid] == self:
 			target.grids.erase(grid)
+			break
+	
+	for hexs in target.rings:
+		if hexs.has(self):
+			hexs.erase(self)
 			break
 	
 	get_parent().remove_child(self)

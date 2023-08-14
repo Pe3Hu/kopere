@@ -33,17 +33,6 @@ func update_size() -> void:
 	custom_minimum_size = vector
 
 
-func init_units() -> void:
-	var n = 7
-	
-	for _i in n:
-		var cell = Global.scene.cell.instantiate()
-		cells.add_child(cell)
-		cell.set_index(_i)
-	
-	reset()
-
-
 func reset() -> void:
 	shuffle_goals()
 	pace = 100
@@ -62,7 +51,7 @@ func shuffle_goals() -> void:
 	for hex in goals:
 		var cell = Global.scene.cell.instantiate()
 		cells.add_child(cell)
-		cell.set_unit(hex.unit)
+		cell.set_hex(hex)
 
 
 func decelerate_spin() -> void:
@@ -92,8 +81,11 @@ func _on_timer_timeout():
 	else:
 		#print("end at", Time.get_unix_time_from_system() - time)
 		var unit = cells.get_child(3).unit
-		print(unit.hex.index)
-		mechanism.shoot(unit)
+		
+		if unit != null:
+			mechanism.shoot(unit)
+			get_parent().remove_child(self)
+			queue_free()
 
 
 func pop_up() -> void:
@@ -103,7 +95,14 @@ func pop_up() -> void:
 	timer.start()
 
 
-func get_goal_rnd() -> MarginContainer:
+func skip_animation() -> void:
 	var goal = goals.pick_random()
 	
-	return goal
+	if goal != null:
+		var unit = goal.unit
+		mechanism.shoot(unit)
+	else:
+		mechanism.miss()
+	
+	get_parent().remove_child(self)
+	queue_free()

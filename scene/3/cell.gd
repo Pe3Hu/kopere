@@ -21,11 +21,15 @@ func update_size() -> void:
 	custom_minimum_size = vector
 
 
-func set_unit(unit_: MarginContainer) -> void:
-	unit = unit_
-	icon.label.text = str(unit.hex.index)
-	set_armor()
-	set_apparatus()
+func set_hex(hex_: Variant) -> void:
+	if hex_ != null:
+		unit = hex_.unit
+		icon.label.text = str(unit.hex.index)
+		set_armor()
+		set_apparatus()
+	else:
+		icon.label.text = "miss"
+		armor.visible = false
 
 
 func set_armor() -> void:
