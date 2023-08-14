@@ -1,10 +1,10 @@
 Node2D
+MarginContainer
+Control
+VBoxContainer
 Label
 Polygon2D
 HBoxContainer
-VBoxContainer
-Control
-MarginContainer
 Timer
 GridContainer
 ProgressBar

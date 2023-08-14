@@ -2,12 +2,12 @@ extends MarginContainer
 
 
 @onready var label = $Label
-@onready var target = $Target
 @onready var icons = $Icons
 
 var firehill = null
 var milestone = null
 var ifm = null#$Icons/IndexForMilestone
+var target = null#$Icons/IndexForMilestone
 
 var team = null
 var remoteness = 0
@@ -21,6 +21,8 @@ func _ready() -> void:
 	ifm = Global.scene.icon.instantiate()
 	icons.add_child(ifm)
 	ifm.label.text = label.text
+	target = Global.scene.target.instantiate()
+	icons.add_child(target)
 
 
 func move() -> void:
@@ -50,11 +52,14 @@ func prepare_shoot() -> void:
 	var foe = select_foe()
 	
 	if foe != null:
+		icons.remove_child(target)
+		firehill.targets.add_child(target)
 		bullet = select_bullet()
 		var aim = select_aim()
-		var unit = get_unit_by_aim(foe.target, aim)
+		var hex = get_hex_by_aim(foe.target, aim)
 		var scatter = 1
-		var goals = get_goals_by_unit(unit, scatter)
+		#var goals = get_goals_by_hex(hex, scatter)
+		var goals = get_all_hexs_around_aim(hex, scatter)
 		var reel = Global.scene.reel.instantiate()
 		firehill.reels.add_child(reel)
 		reel.mechanism = self
@@ -89,40 +94,54 @@ func select_aim() -> Variant:
 	return aim
 
 
-func get_unit_by_aim(target_: Control, aim_: String) -> Variant:
-	var unit = null
+func get_hex_by_aim(target_: Control, aim_: String) -> Variant:
+	var hex = null
 	var ring = null
 	
 	match aim_:
 		"bullseye":
 			ring = 0
 		"rapid-fire":
-			var rnd = target_.units.pick_random()
-			ring = rnd.ring
+			var grid = target_.grids.keys().pick_random()
+			var rnd_hex = target_.grids[grid]
+			ring = rnd_hex.ring
 			
-			if ring == target_.rings.get_child_count():
-				ring -= 1
 			
 			ring = 1
 	
 	if ring != null:
-		var units = target_.rings.get_node(str(ring)).get_children()
-		unit = units.pick_random()
+		var hexs = target_.rings[ring]
+		hex = hexs.pick_random()
 	
-	return unit
+	return hex
 
 
-func get_goals_by_unit(unit_: MarginContainer, scatter_: int) -> Variant:
+func get_all_hexs_around_aim(hex_: Polygon2D, scatter_: int) -> Variant:
+	var goals = {}
+	goals[hex_] = 0
+	
+	for _i in scatter_:
+		for goal in goals:
+			if goals[goal] == _i:
+				for neighbor in goal.neighbors:
+					if !goals.has(neighbor):
+						goals[neighbor] = _i + 1
+	
+	return goals.keys()
+	
+
+
+func get_goals_by_hex(hex_: MarginContainer, scatter_: int) -> Variant:
 	var goals = []
-	var rings = [unit_.ring]
+	var rings = [hex_.ring]
 	
 	if scatter_ == 1:
-		if unit_.ring == 0:
+		if hex_.ring == 0:
 			for _i in 6:
 				rings.append(1)
 		else:
 			for _i in 3:
-				var ring = unit_.ring + _i - 1
+				var ring = hex_.ring + _i - 1
 				
 				for _j in _i + 1:
 					rings.append(ring)
@@ -134,7 +153,7 @@ func get_goals_by_unit(unit_: MarginContainer, scatter_: int) -> Variant:
 	for ring in rings:
 		if !options.has(ring):
 			options[ring] = []
-			options[ring].append_array(unit_.target.rings.get_node(str(ring)).get_children())
+			options[ring].append_array(hex_.target.rings.get_node(str(ring)).get_children())
 	
 		var goal = options[ring].pick_random()
 		options[ring].erase(goal)

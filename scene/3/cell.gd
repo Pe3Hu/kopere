@@ -23,7 +23,7 @@ func update_size() -> void:
 
 func set_unit(unit_: MarginContainer) -> void:
 	unit = unit_
-	icon.label.text = str(unit.index)
+	icon.label.text = str(unit.hex.index)
 	set_armor()
 	set_apparatus()
 

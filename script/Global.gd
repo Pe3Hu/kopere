@@ -218,6 +218,10 @@ func init_vec():
 	vec.size.cell = Vector2(vec.size.unit)
 	vec.size.letter2 = Vector2(31, 23)
 	vec.size.letter3 = Vector2(46, 23)
+	
+	
+	num.size.unit.R = vec.size.unit.x / 2 * 1.25
+	num.size.unit.r =  num.size.unit.R * sqrt(3) / 2
 
 
 func init_window_size():

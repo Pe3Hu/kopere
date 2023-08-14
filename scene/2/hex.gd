@@ -2,13 +2,16 @@ extends Polygon2D
 
 
 @onready var label = $Label
+@onready var unit = $Unit
 
-var unit = null
-
+var target = null
+var index = null
+var ring = null
+var grid = null
+var neighbors = {}
 
 func _ready() -> void:
 	set_vertexs()
-	pass
 
 
 func set_vertexs() -> void:
@@ -41,3 +44,21 @@ func update_color() -> void:
 	
 	var color_ = Color.from_hsv(h,s,v)
 	set_color(color_)
+ 
+
+func set_index(index_: int) -> void:
+	index = index_
+	unit.icon.label.text = str(index)
+
+
+func clean() -> void:
+	for neighbor in neighbors:
+		neighbor.neighbors.erase(self)
+	
+	for grid in target.grids:
+		if target.grids[grid] == self:
+			target.grids.erase(grid)
+			break
+	
+	get_parent().remove_child(self)
+	queue_free()

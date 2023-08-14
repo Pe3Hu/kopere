@@ -6,19 +6,16 @@ extends MarginContainer
 @onready var apparatus = $HBox/Apparatus
 @onready var icon = $HBox/Icon
 
-var index = null
-var target = null
 var hex = null
 var vulnerable = false
-var ring = null
-var grid = null
-var neighbors = {}
 var thickness = null
 
 
 func _ready():
 	var style = StyleBoxFlat.new()
 	bg.set("theme_override_styles/panel", style)
+	
+	hex = get_parent()
 	armor.update_color()
 	apparatus.update_color()
 	update_size()
@@ -33,17 +30,11 @@ func update_color() -> void:
 	var max_h = 360.0
 	var s = 0.75
 	var v = 1
-	var h = float(index)  / 7
+	var h = float(0)  / 7
 	var color_ = Color.from_hsv(h,s,v)
 	color_ = Color.LIGHT_SLATE_GRAY
 	var style = bg.get("theme_override_styles/panel")
 	style.set_bg_color(color_)
-
-
-func set_index(index_: int) -> void:
-	index = index_
-	icon.label.text = str(index)
-	update_color()
 
 
 func set_armor_thickness(layers_: int) -> void:
@@ -64,4 +55,3 @@ func set_apparatus(max_: int) -> void:
 func switch_indicators() -> void:
 	armor.visible = !armor.visible
 	apparatus.visible = !apparatus.visible
- 

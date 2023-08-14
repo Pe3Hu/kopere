@@ -5,6 +5,9 @@ extends MarginContainer
 @onready var milestones = $VBox/HBox/Milestones
 @onready var defenders = $VBox/HBox/Defenders
 @onready var attackers = $VBox/HBox/Attackers
+@onready var targets = $VBox/HBox/Targets
+@onready var mechanisms = $Mechanisms
+
 
 var teams = {}
 var max_remoteness = 0
@@ -47,10 +50,10 @@ func add_mechanism_to_team(team_: String, mechanism_: MarginContainer) -> void:
 	match team_:
 		"attackers":
 			remoteness = 9
-			attackers.add_child(mechanism_)
+			mechanisms.add_child(mechanism_)
 		"defenders":
 			remoteness = 0
-			defenders.add_child(mechanism_)
+			mechanisms.add_child(mechanism_)
 			mechanism_.visible = false
 	
 	teams[team_].append(mechanism_)

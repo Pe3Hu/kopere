@@ -59,10 +59,10 @@ func shuffle_goals() -> void:
 	
 	goals.shuffle()
 	
-	for unit in goals:
+	for hex in goals:
 		var cell = Global.scene.cell.instantiate()
 		cells.add_child(cell)
-		cell.set_unit(unit)
+		cell.set_unit(hex.unit)
 
 
 func decelerate_spin() -> void:
@@ -92,7 +92,7 @@ func _on_timer_timeout():
 	else:
 		#print("end at", Time.get_unix_time_from_system() - time)
 		var unit = cells.get_child(3).unit
-		print(unit.index)
+		print(unit.hex.index)
 		mechanism.shoot(unit)
 
 
