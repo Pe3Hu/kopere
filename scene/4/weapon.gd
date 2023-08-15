@@ -27,3 +27,8 @@ func get_penetration(vulnerable_: bool) -> int:
 func get_damage() -> int:
 	var damage = Global.dict.weapon.title[title]["projectile damage"]
 	return damage
+
+
+func get_scatter() -> int:
+	var scatter = Global.dict.weapon.title[title].scatter
+	return scatter

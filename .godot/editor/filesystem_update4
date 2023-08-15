@@ -18,3 +18,7 @@ res://scene/2/target.gd
 res://scene/2/unit.gd
 res://scene/1/firehill.gd
 res://scene/0/Game.gd
+res://asset/stat/stat.json
+res://scene/3/cell.gd
+res://scene/2/hex.gd
+res://scene/3/reel.gd

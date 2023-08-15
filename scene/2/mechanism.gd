@@ -14,6 +14,8 @@ var team = null
 var remoteness = 0
 var speed =  10
 var active_weapon = null
+var aim = null
+var active = true
 
 
 func _ready() -> void:
@@ -26,6 +28,7 @@ func _ready() -> void:
 	icons.add_child(target)
 	target.mechanism = self
 	equip_weapon("pistol")
+	select_aim()
 
 
 func equip_weapon(title_: String) -> void:
@@ -64,9 +67,8 @@ func prepare_shoot() -> void:
 	if foe != null:
 		foe.icons.remove_child(foe.target)
 		firehill.targets.add_child(foe.target)
-		var aim = select_aim()
 		var hex = get_hex_by_aim(foe.target, aim)
-		var scatter = 1
+		var scatter = active_weapon.get_scatter()
 		var goals = get_all_hexs_around_aim(hex, scatter)
 		add_misses(goals, scatter)
 		var reel = Global.scene.reel.instantiate()
@@ -86,16 +88,15 @@ func select_foe() -> Variant:
 	if !foes.is_empty():
 		foe = foes.front()
 		
-		if foe.target.integrity.pb.value <= 0:
+		if !foe.active:
+		#if foe.target.integrity.pb.value <= 0:
 			foe = null
 	
 	return foe
 
 
-func select_aim() -> Variant:
-	var aim = "elimination"
-	
-	return aim
+func select_aim() -> void:
+	aim = "elimination"
 
 
 func get_hex_by_aim(target_: Control, aim_: String) -> Variant:
@@ -197,16 +198,29 @@ func through() -> void:
 
 
 func disrupt() -> void:
-	statistics_collection()
+	active = false
 	
-	if Global.num.index.iteration < 3:
+	if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
+		statistics_collection()
+		
+		if Global.num.index.iteration == 10:
+			Global.num.index.weapon += 1
+			Global.num.index.iteration = 0
+			
+			if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
+				var weapon = Global.dict.weapon.title.keys()[Global.num.index.weapon]
+				equip_weapon(weapon)
+		
 		target.reset()
 	else:
-		print(Global.stats.weapon[active_weapon.title])
+		Global.save_statistics(self)
 
 
 
 func statistics_collection() -> void:
-	Global.stats.weapon[active_weapon.title][Global.num.index.iteration] = int(Global.num.index.shot)
+	if !Global.stats.weapon.has(active_weapon.title):
+		Global.stats.weapon[active_weapon.title] = []
+	
+	Global.stats.weapon[active_weapon.title].append(int(Global.num.index.shot))
 	Global.num.index.shot = 0
 	Global.num.index.iteration += 1

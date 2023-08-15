@@ -157,6 +157,8 @@ func set_integrity() -> void:
 
 
 func reset() -> void:
+	mechanism.active = true
+	
 	for hex in hexs.get_children():
 		var thickness = Global.dict.skeleton.title[skeleton].thickness[hex.index]
 		hex.unit.set_armor_thickness(thickness)

@@ -20,6 +20,7 @@ func init_num() -> void:
 	num.index.mechanism = 0
 	num.index.shot = 0
 	num.index.iteration = 0
+	num.index.weapon = 0
 	
 	num.size = {}
 	num.size.unit = {}
@@ -95,7 +96,6 @@ func init_dict() -> void:
 	dict.team.opponent["defenders"] = "attackers"
 	
 	stats.weapon = {}
-	stats.weapon.pistol = {}
 	
 	init_scope()
 	init_corner()
@@ -224,6 +224,7 @@ func init_weapon() -> void:
 
 func init_arr() -> void:
 	pass
+	
 
 
 func init_node() -> void:
@@ -278,14 +279,13 @@ func _ready() -> void:
 
 
 func save(path_: String, data_: String):
-	var path = path_+".json"
-	var file = FileAccess.open(path, FileAccess.WRITE)
+	var file = FileAccess.open(path_, FileAccess.WRITE_READ)
 	file.store_string(data_)
 	file.close()
 
 
 func load_data(path_: String):
-	var file = FileAccess.open(path_,FileAccess.READ)
+	var file = FileAccess.open(path_, FileAccess.READ)
 	var text = file.get_as_text()
 	var json_object = JSON.new()
 	var parse_err = json_object.parse(text)
@@ -327,3 +327,29 @@ func check_grid_on_screen(parent_: MarginContainer, grid_: Vector2) -> bool:
 		return unit.visible
 	else:
 		return false
+
+
+func save_statistics(mechanism_: MarginContainer) -> void:
+	var datas = {}
+	
+	for weapon in Global.stats.weapon:
+		var data = {}
+		#data.bullet = mechanism_.active_weapon.bullet
+		#data.aim = mechanism_.aim
+		data["firing range"] = Global.stats.weapon[weapon]
+		data.avg = 0
+	
+		for shoots in Global.stats.weapon[weapon]:
+			data.avg += shoots
+		
+		data.avg /= Global.stats.weapon[weapon].size()
+		datas[weapon] = data
+	print(datas)
+	
+	var time = Time.get_datetime_string_from_datetime_dict(Time.get_datetime_dict_from_system(), true)
+	var path = "res://asset/stat/" + "stat" + ".json"
+	var file_dict = load_data(path)
+	file_dict[time] = datas
+	var str = JSON.stringify(file_dict)
+	save(path, str)
+	

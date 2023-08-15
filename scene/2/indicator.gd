@@ -54,6 +54,12 @@ func add_value(value_: int) -> void:
 	
 	pb.value += value
 	
+	if name == "Integrity":
+		var percentage = float(pb.value) / pb.max_value
+		
+		if percentage < 0.5:
+			target.mechanism.disrupt()
+	
 	if pb.value >= pb.max_value:
 		pb.value = pb.max_value
 	
