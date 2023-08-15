@@ -18,6 +18,8 @@ func init_num() -> void:
 	num.index.unit = 0
 	num.index.pattern = 0
 	num.index.mechanism = 0
+	num.index.shot = 0
+	num.index.iteration = 0
 	
 	num.size = {}
 	num.size.unit = {}
@@ -92,11 +94,15 @@ func init_dict() -> void:
 	dict.team.opponent["attackers"] = "defenders"
 	dict.team.opponent["defenders"] = "attackers"
 	
+	stats.weapon = {}
+	stats.weapon.pistol = {}
 	
 	init_scope()
 	init_corner()
 	init_pentahex()
 	init_skeleton()
+	init_weapon()
+	
 
 
 func init_scope() -> void:
@@ -140,7 +146,7 @@ func init_corner() -> void:
 func init_pentahex() -> void:
 	dict.pentahex = {}
 	dict.pentahex.indexs = {}
-	var path = "res://asset/json/pentahex_data.json"
+	var path = "res://asset/json/pentahex_kopere.json"
 	var dict_ = load_data(path)
 	
 	for key in dict_.keys():
@@ -150,7 +156,7 @@ func init_pentahex() -> void:
 func init_skeleton() -> void:
 	dict.skeleton = {}
 	dict.skeleton.title = {}
-	var path = "res://asset/json/kopere_skeleton.json"
+	var path = "res://asset/json/skeleton_kopere.json"
 	var array = load_data(path)
 	var rings = ["I","II","III"]
 	
@@ -173,17 +179,47 @@ func init_skeleton() -> void:
 				dict.skeleton.title[title].thickness[index] = data[key]
 
 
-func init_title() -> void:
-	dict.title = {}
-	var path = "res://asset/json/wohnwagen_title_data.json"
+func init_weapon() -> void:
+	dict.weapon = {}
+	dict.weapon.title = {}
+	var path = "res://asset/json/weapon_kopere.json"
 	var array = load_data(path)
 	
-	for key in array.front().keys():
-		dict.title[key] = []
-	
-	for dict_ in array:
-		for key in dict_.keys():
-			dict.title[key].append(dict_[key])
+	for data in array:
+		dict.weapon.title[data.title] = {}
+		dict.weapon.title[data.title].distance = {}
+		dict.weapon.title[data.title].distance.effective = {}
+		dict.weapon.title[data.title].rate = {}
+		dict.weapon.title[data.title].penetration = {}
+		
+		for key in data:
+			var words = key.rsplit(" ")
+			var flag = true
+			
+			for subkey in dict.weapon.title[data.title]:
+				if words.has(subkey):
+					flag = false
+					var str = ""
+					
+					for _i in words.size():
+						var word = words[_i]
+						
+						if word != subkey and word != "effective":
+							if _i != 0:
+								str += " "
+							
+							str += word
+					
+					if words.has("effective"):
+						dict.weapon.title[data.title][subkey].effective[str] = data[key]
+					else:
+						dict.weapon.title[data.title][subkey][str] = data[key]
+			
+			if flag:
+				dict.weapon.title[data.title][key] = data[key]
+		
+		
+		dict.weapon.title[data.title].erase("title")
 
 
 func init_arr() -> void:
@@ -195,29 +231,19 @@ func init_node() -> void:
 
 
 func init_scene() -> void:
-	#scene.gebirge = load("res://scene/0/gebirge.tscn")
-	#scene.framework = load("res://scene/0/framework.tscn")
-	#scene.module = load("res://scene/0/module.tscn")
-	#scene.pattern = load("res://scene/1/pattern.tscn")
-	#scene.unit = load("res://scene/1/unit.tscn")
-	
-	scene.factory = load("res://scene/98/factory.tscn")
-	scene.framework = load("res://scene/98/framework.tscn")
-	scene.module = load("res://scene/98/module.tscn")
-	scene.unit = load("res://scene/98/unit.tscn")
-	scene.pattern = load("res://scene/98/pattern.tscn")
-	
-	
 	scene.firehill = load("res://scene/1/firehill.tscn")
 	scene.milestone = load("res://scene/1/milestone.tscn")
 	scene.icon = load("res://scene/1/icon.tscn")
+	
 	scene.mechanism = load("res://scene/2/mechanism.tscn")
 	scene.target = load("res://scene/2/target.tscn")
 	scene.hex = load("res://scene/2/hex.tscn")
+	
 	scene.unit = load("res://scene/2/unit.tscn")
 	scene.reel = load("res://scene/3/reel.tscn")
 	scene.cell = load("res://scene/3/cell.tscn")
 	
+	scene.weapon = load("res://scene/4/weapon.tscn")
 	
 
 

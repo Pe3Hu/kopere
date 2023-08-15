@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var label = $Label
 
 var unit = null
+var target = null
 
 
 func _ready():
@@ -59,12 +60,15 @@ func add_value(value_: int) -> void:
 	if pb.value <= pb.min_value:
 		pb.value = pb.min_value
 		
-		if name == "Armor":
-			unit.switch_indicators()
-		
-		if name == "Apparatus" and unit.vulnerable:
-			var vulnerable_damage = -pb.max_value * 3
-			unit.hex.target.integrity.add_value(vulnerable_damage)
+		match name:
+			"Armor":
+				unit.switch_indicators()
+			"Apparatus":
+				if unit.vulnerable:
+					var vulnerable_damage = -pb.max_value * 3
+					unit.hex.target.integrity.add_value(vulnerable_damage)
+			"Integrity":
+					target.mechanism.disrupt()
 	
 	if name != "Integrity":
 		label.text = str(pb.value)

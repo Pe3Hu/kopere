@@ -9,6 +9,7 @@ func _ready() -> void:
 	#Global.node.target = Global.scene.target.instantiate()
 	#Global.node.game.get_node("Layer0").add_child(Global.node.target)
 	#datas.sort_custom(func(a, b): return a.value < b.value) 012
+	
 	pass
 
 

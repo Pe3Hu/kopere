@@ -1,5 +1,4 @@
 res://scene/1/firehill.tscn
-res://scene/2/mechanism.gd
 res://scene/2/target.tscn
 res://scene/2/indicator.tscn
 res://scene/2/mechanism.tscn
@@ -9,11 +8,13 @@ res://scene/0/blank.tscn
 res://scene/2/unit.tscn
 res://scene/3/cell.tscn
 res://scene/2/hex.tscn
-res://scene/2/target.gd
-res://scene/1/firehill.gd
-res://scene/2/hex.gd
-res://scene/2/unit.gd
 res://script/Global.gd
-res://scene/3/reel.gd
-res://scene/3/cell.gd
+res://scene/2/mechanism.gd
+res://scene/4/weapon.tscn
+res://scene/4/weapon.gd
+res://asset/json/weapon_kopere.json
 res://scene/2/indicator.gd
+res://scene/2/target.gd
+res://scene/2/unit.gd
+res://scene/1/firehill.gd
+res://scene/0/Game.gd

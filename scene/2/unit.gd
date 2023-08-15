@@ -42,15 +42,15 @@ func update_color() -> void:
 func set_armor_thickness(layers_: int) -> void:
 	thickness = 5 * layers_
 	armor.pb.max_value = thickness
-	armor.pb.value = thickness
+	armor.pb.value = int(armor.pb.max_value)
 	armor.label.text = str(thickness)
-	set_apparatus(100)
+	set_apparatus(25)
 	hex.update_color()
 
 
 func set_apparatus(max_: int) -> void:
 	apparatus.pb.max_value = max_
-	apparatus.pb.value = max_
+	apparatus.pb.value = int(apparatus.pb.max_value)
 	apparatus.label.text = str(max_)
 
 

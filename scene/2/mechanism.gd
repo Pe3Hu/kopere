@@ -3,6 +3,7 @@ extends MarginContainer
 
 @onready var label = $Label
 @onready var icons = $Icons
+@onready var weapons = $Weapons
 
 var firehill = null
 var milestone = null
@@ -12,7 +13,7 @@ var target = null#$Icons/IndexForMilestone
 var team = null
 var remoteness = 0
 var speed =  10
-var bullet = null
+var active_weapon = null
 
 
 func _ready() -> void:
@@ -24,6 +25,14 @@ func _ready() -> void:
 	target = Global.scene.target.instantiate()
 	icons.add_child(target)
 	target.mechanism = self
+	equip_weapon("pistol")
+
+
+func equip_weapon(title_: String) -> void:
+	var weapon = Global.scene.weapon.instantiate()
+	weapon.init(title_)
+	weapons.add_child(weapon)
+	active_weapon = weapon
 
 
 func move() -> void:
@@ -55,7 +64,6 @@ func prepare_shoot() -> void:
 	if foe != null:
 		foe.icons.remove_child(foe.target)
 		firehill.targets.add_child(foe.target)
-		bullet = select_bullet()
 		var aim = select_aim()
 		var hex = get_hex_by_aim(foe.target, aim)
 		var scatter = 1
@@ -66,6 +74,7 @@ func prepare_shoot() -> void:
 		reel.mechanism = self
 		reel.add_goals(goals)
 		reel.skip_animation()
+		Global.num.index.shot += 1
 		#reel.timer.start()
 
 
@@ -83,14 +92,8 @@ func select_foe() -> Variant:
 	return foe
 
 
-func select_bullet() -> Variant:
-	var bullet = "standard"
-	
-	return bullet
-
-
 func select_aim() -> Variant:
-	var aim = "rapid-fire"#"bullseye"
+	var aim = "elimination"
 	
 	return aim
 
@@ -106,6 +109,13 @@ func get_hex_by_aim(target_: Control, aim_: String) -> Variant:
 			var grid = target_.grids.keys().pick_random()
 			var rnd_hex = target_.grids[grid]
 			ring = rnd_hex.ring
+		"elimination":
+			var hexs = target_.vulnerabilities
+			
+			if !hexs.is_empty():
+				hex = hexs.pick_random()
+			else:
+				ring = 0
 	
 	if ring != null:
 		var hexs = target_.rings[ring]
@@ -138,15 +148,15 @@ func add_misses(goals_: Array, scatter_: int) -> void:
 func shoot(goal_: MarginContainer) -> void:
 	if goal_.apparatus.pb.value > 0:
 		var breach = false
-		var limits = {} 
-		limits.penetration = 10
+		var limits = {}
+		limits.penetration = active_weapon.get_penetration(goal_.vulnerable)
 		limits.armor = goal_.armor.pb.value
 		var damage = {}
 		
 		if limits.armor > 0:
 			var roll = {}
 			
-			match bullet:
+			match active_weapon.bullet:
 				"standard":
 					limits.penetration += 0
 			
@@ -170,7 +180,7 @@ func shoot(goal_: MarginContainer) -> void:
 			breach = true
 		
 		if breach:
-			damage.apparatus = 10
+			damage.apparatus = active_weapon.get_damage()
 			goal_.apparatus.add_value(-damage.apparatus)
 		
 		firehill.timer.start()
@@ -186,3 +196,17 @@ func through() -> void:
 	firehill.timer.start()
 
 
+func disrupt() -> void:
+	statistics_collection()
+	
+	if Global.num.index.iteration < 3:
+		target.reset()
+	else:
+		print(Global.stats.weapon[active_weapon.title])
+
+
+
+func statistics_collection() -> void:
+	Global.stats.weapon[active_weapon.title][Global.num.index.iteration] = int(Global.num.index.shot)
+	Global.num.index.shot = 0
+	Global.num.index.iteration += 1

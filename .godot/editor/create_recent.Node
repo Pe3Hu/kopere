@@ -1,7 +1,7 @@
+VBoxContainer
+Control
 MarginContainer
 Node2D
-Control
-VBoxContainer
 Label
 Polygon2D
 HBoxContainer

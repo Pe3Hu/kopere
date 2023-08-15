@@ -8,6 +8,7 @@ var mechanism = null
 var skeleton = null
 var grids = {}
 var rings = []
+var vulnerabilities = []
 var corners = {}
 
 
@@ -59,6 +60,7 @@ func add_hex(grid_: Vector3) -> void:
 		
 		if thickness == 1:
 			hex.unit.vulnerable = true
+			vulnerabilities.append(hex)
 	else:
 		hex.visible = false
 
@@ -144,6 +146,7 @@ func update_size() -> void:
 
 func set_integrity() -> void:
 	integrity.pb.max_value = 0
+	integrity.target = self
 	
 	for hex in hexs.get_children():
 		integrity.pb.max_value += hex.unit.apparatus.pb.max_value
@@ -151,3 +154,17 @@ func set_integrity() -> void:
 	integrity.pb.value = int(integrity.pb.max_value)
 	integrity.pb.show_percentage = true
 	integrity.update_color()
+
+
+func reset() -> void:
+	for hex in hexs.get_children():
+		var thickness = Global.dict.skeleton.title[skeleton].thickness[hex.index]
+		hex.unit.set_armor_thickness(thickness)
+		
+		if hex.unit.apparatus.visible:
+			hex.unit.switch_indicators()
+		
+		if hex.unit.vulnerable:
+			vulnerabilities.append(hex)
+	
+	integrity.pb.value = int(integrity.pb.max_value)
