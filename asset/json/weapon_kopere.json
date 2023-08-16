@@ -25,7 +25,7 @@
   "reload": 5,
   "projectile damage": 9,
   "salvo": 1,
-  "standard armor penetration": 20,
+  "standard armor penetration": 15,
   "critical armor penetration": 30,
   "scatter": 1
  },
@@ -55,7 +55,7 @@
   "reload": 11,
   "projectile damage": 8,
   "salvo": 1,
-  "standard armor penetration": 20,
+  "standard armor penetration": 15,
   "critical armor penetration": 30,
   "scatter": 2
  },
@@ -70,7 +70,7 @@
   "reload": 7,
   "projectile damage": 28,
   "salvo": 1,
-  "standard armor penetration": 25,
+  "standard armor penetration": 20,
   "critical armor penetration": 30,
   "scatter": 0
  }

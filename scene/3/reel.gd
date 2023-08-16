@@ -13,9 +13,11 @@ var stats = {}
 var counter = 0
 var goals = []
 var mechanism = null
+var salvo = 1
 
 
-func _ready() -> void:
+func init(salvo_: int) -> void:
+	salvo = salvo_
 	#time = Time.get_unix_time_from_system()
 	#init_cells()
 	pass
@@ -96,13 +98,16 @@ func pop_up() -> void:
 
 
 func skip_animation() -> void:
-	var goal = goals.pick_random()
-	
-	if goal != null:
-		var unit = goal.unit
-		mechanism.shoot(unit)
-	else:
-		mechanism.miss()
+	for _i in salvo:
+		var goal = goals.pick_random()
+		
+		if goal != null:
+			var unit = goal.unit
+			mechanism.active_weapon.shoot(unit)
+		else:
+			mechanism.active_weapon.miss()
+		
+		goals.erase(goal)
 	
 	get_parent().remove_child(self)
 	queue_free()

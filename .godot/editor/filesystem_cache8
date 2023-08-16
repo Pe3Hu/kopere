@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1692109991
+::res://::1692187619
 ::res://asset/::1692114220
 default_env.tres::Environment::-1::1691764525::0::1::::<><>::
 icon.png::CompressedTexture2D::2432420761471245026::1691764525::1691764677::1::::<><>::
@@ -13,43 +13,43 @@ Marlboro.ttf::FontFile::1499582478604000857::1691764525::1691764525::1::::<><>::
 metal lord ot.otf::FontFile::3619300847126422558::1691764525::1691764525::1::::<><>::
 neuropolitical rg.otf::FontFile::2325526762121942984::1691764525::1691764525::1::::<><>::
 rimouski sb.otf::FontFile::2683584631797712805::1691764525::1691764525::1::::<><>::
-::res://asset/json/::1692115453
+::res://asset/json/::1692115455
 hexagex_6_data.json::JSON::-1::1691764525::0::1::::<><>::
 pentahex_kopere.json::JSON::-1::1691764525::0::1::::<><>::
 skeleton_kopere.json::JSON::-1::1691957384::0::1::::<><>::
-stat.json::JSON::-1::1692115453::0::1::::<><>::
 weapon_kopere.json::JSON::-1::1692111730::0::1::::<><>::
-::res://asset/stat/::1692114217
+::res://asset/stat/::1692119809
+stat.json::JSON::-1::1692119809::0::1::::<><>::
 ::res://scene/::1692112332
-::res://scene/0/::1692115301
-blank.tscn::PackedScene::7513182548190797040::1692115301::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
-Game.gd::GDScript::-1::1692113317::0::1::::<>Node<>::
+::res://scene/0/::1692120145
+blank.tscn::PackedScene::7513182548190797040::1692120145::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
+Game.gd::GDScript::-1::1692115755::0::1::::<>Node<>::
 Game.tscn::PackedScene::8246655032211948728::1691837967::0::1::::<><>::res://scene/0/Game.gd
-::res://scene/1/::1692115301
-firehill.gd::GDScript::-1::1692114749::0::1::::<>MarginContainer<>::
-firehill.tscn::PackedScene::2338749227682366136::1692115301::0::1::::<><>::res://scene/1/firehill.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
+::res://scene/1/::1692120145
+firehill.gd::GDScript::-1::1692115755::0::1::::<>MarginContainer<>::
+firehill.tscn::PackedScene::2338749227682366136::1692120145::0::1::::<><>::res://scene/1/firehill.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
 icon.gd::GDScript::-1::1691941377::0::1::::<>MarginContainer<>::
-icon.tscn::PackedScene::8237931673890408915::1692115301::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/1/icon.gd
-milestone.gd::GDScript::-1::1691936187::0::1::::<>MarginContainer<>::
-milestone.tscn::PackedScene::2346828906857611203::1692115301::0::1::::<><>::res://scene/1/milestone.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
-::res://scene/2/::1692115301
-hex.gd::GDScript::-1::1692025850::0::1::::<>Polygon2D<>::
-hex.tscn::PackedScene::4522708440511700786::1692115301::0::1::::<><>::res://scene/2/hex.gd<>uid://c45q01tv3ems6::::res://scene/2/unit.tscn
-indicator.gd::GDScript::-1::1692113508::0::1::::<>MarginContainer<>::
-indicator.tscn::PackedScene::3739802612801790678::1692115301::0::1::::<><>::res://scene/2/indicator.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>uid://brthmdy0bvgqo::::res://asset/font/metal lord ot.otf
-mechanism.gd::GDScript::-1::1692114410::0::1::::<>MarginContainer<>::
-mechanism.tscn::PackedScene::7779121175366431135::1692115301::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/2/mechanism.gd
-target.gd::GDScript::-1::1692113708::0::1::::<>MarginContainer<>::
-target.tscn::PackedScene::151542384031999069::1692115301::0::1::::<><>::res://scene/2/target.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
-unit.gd::GDScript::-1::1692113627::0::1::::<>MarginContainer<>::
-unit.tscn::PackedScene::6871266678192941043::1692115301::0::1::::<><>::res://scene/2/unit.gd<>uid://dpmrsb7bqrheh::::res://scene/1/icon.tscn<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
-::res://scene/3/::1692115301
-cell.gd::GDScript::-1::1692023333::0::1::::<>MarginContainer<>::
-cell.tscn::PackedScene::1376893502277098245::1692115301::0::1::::<><>::res://scene/3/cell.gd<>uid://dpmrsb7bqrheh::::res://scene/1/icon.tscn<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
-reel.gd::GDScript::-1::1692026213::0::1::::<>Control<>::
+icon.tscn::PackedScene::8237931673890408915::1692120145::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/1/icon.gd
+milestone.gd::GDScript::-1::1692119809::0::1::::<>MarginContainer<>::
+milestone.tscn::PackedScene::2346828906857611203::1692120145::0::1::::<><>::res://scene/1/milestone.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf
+::res://scene/2/::1692120145
+hex.gd::GDScript::-1::1692115755::0::1::::<>Polygon2D<>::
+hex.tscn::PackedScene::4522708440511700786::1692120145::0::1::::<><>::res://scene/2/hex.gd<>uid://c45q01tv3ems6::::res://scene/2/unit.tscn
+indicator.gd::GDScript::-1::1692116656::0::1::::<>MarginContainer<>::
+indicator.tscn::PackedScene::3739802612801790678::1692120145::0::1::::<><>::res://scene/2/indicator.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>uid://brthmdy0bvgqo::::res://asset/font/metal lord ot.otf
+mechanism.gd::GDScript::-1::1692120145::0::1::::<>MarginContainer<>::
+mechanism.tscn::PackedScene::7779121175366431135::1692120145::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/2/mechanism.gd
+target.gd::GDScript::-1::1692116656::0::1::::<>MarginContainer<>::
+target.tscn::PackedScene::151542384031999069::1692120145::0::1::::<><>::res://scene/2/target.gd<>uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
+unit.gd::GDScript::-1::1692115755::0::1::::<>MarginContainer<>::
+unit.tscn::PackedScene::6871266678192941043::1692120145::0::1::::<><>::res://scene/2/unit.gd<>uid://dpmrsb7bqrheh::::res://scene/1/icon.tscn<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
+::res://scene/3/::1692120145
+cell.gd::GDScript::-1::1692115755::0::1::::<>MarginContainer<>::
+cell.tscn::PackedScene::1376893502277098245::1692120145::0::1::::<><>::res://scene/3/cell.gd<>uid://dpmrsb7bqrheh::::res://scene/1/icon.tscn<>uid://btjuadb2b7bqc::::res://scene/2/indicator.tscn
+reel.gd::GDScript::-1::1692115755::0::1::::<>Control<>::
 reel.tscn::PackedScene::8867107619945943476::1691946430::0::1::::<><>::res://scene/3/reel.gd<>uid://8erc6oqf1hw7
-::res://scene/4/::1692115301
-weapon.gd::GDScript::-1::1692112511::0::1::::<>MarginContainer<>::
-weapon.tscn::PackedScene::1735092351365910395::1692115301::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/4/weapon.gd
-::res://script/::1692115301
-Global.gd::GDScript::-1::1692115301::0::1::::<>Node<>::
+::res://scene/4/::1692120145
+weapon.gd::GDScript::-1::1692117141::0::1::::<>MarginContainer<>::
+weapon.tscn::PackedScene::1735092351365910395::1692120145::0::1::::<><>::uid://8erc6oqf1hw7::::res://asset/font/neuropolitical rg.otf<>res://scene/4/weapon.gd
+::res://script/::1692117457
+Global.gd::GDScript::-1::1692117457::0::1::::<>Node<>::

@@ -27,7 +27,7 @@ func _ready() -> void:
 	target = Global.scene.target.instantiate()
 	icons.add_child(target)
 	target.mechanism = self
-	equip_weapon("pistol")
+	equip_weapon("pistol")#automatic rifle
 	select_aim()
 
 
@@ -36,6 +36,7 @@ func equip_weapon(title_: String) -> void:
 	weapon.init(title_)
 	weapons.add_child(weapon)
 	active_weapon = weapon
+	weapon.mechanism = self
 
 
 func move() -> void:
@@ -65,13 +66,18 @@ func prepare_shoot() -> void:
 	var foe = select_foe()
 	
 	if foe != null:
-		foe.icons.remove_child(foe.target)
-		firehill.targets.add_child(foe.target)
+		if foe.target.get_parent() == foe.icons:
+			foe.icons.remove_child(foe.target)
+			firehill.targets.add_child(foe.target)
+		
 		var hex = get_hex_by_aim(foe.target, aim)
 		var scatter = active_weapon.get_scatter()
+		var salvo = active_weapon.get_salvo()
 		var goals = get_all_hexs_around_aim(hex, scatter)
 		add_misses(goals, scatter)
+		aim_at_markers(goals)
 		var reel = Global.scene.reel.instantiate()
+		reel.init(salvo)
 		firehill.reels.add_child(reel)
 		reel.mechanism = self
 		reel.add_goals(goals)
@@ -146,74 +152,39 @@ func add_misses(goals_: Array, scatter_: int) -> void:
 		goals_.append(null)
 
 
-func shoot(goal_: MarginContainer) -> void:
-	if goal_.apparatus.pb.value > 0:
-		var breach = false
-		var limits = {}
-		limits.penetration = active_weapon.get_penetration(goal_.vulnerable)
-		limits.armor = goal_.armor.pb.value
-		var damage = {}
-		
-		if limits.armor > 0:
-			var roll = {}
-			
-			match active_weapon.bullet:
-				"standard":
-					limits.penetration += 0
-			
-			for key in limits:
-				Global.rng.randomize()
-				roll[key] = Global.rng.randi_range(0, limits[key])
-		
-			damage.armor = roll.penetration - roll.armor
-			#print([limits, roll])
-			
-			if roll.penetration > roll.armor:
-				damage.armor = roll.penetration
-			else:
-				damage.armor = floor(sqrt(roll.penetration))
-			
-			goal_.armor.add_value(-damage.armor)
-			
-			if goal_.armor.pb.value <= 0:
-				breach = true
-		else:
-			breach = true
-		
-		if breach:
-			damage.apparatus = active_weapon.get_damage()
-			goal_.apparatus.add_value(-damage.apparatus)
-		
-		firehill.timer.start()
-	else:
-		through()
-
-
-func miss() -> void:
-	firehill.timer.start()
-
-
-func through() -> void:
-	firehill.timer.start()
+func aim_at_markers(goals_: Array) -> void:
+	var markers = []
+	var repeats = 2
+	
+	for goal in goals_:
+		if goal != null:
+			if goal.unit.marker:
+				markers.append(goal)
+	
+	for goal in markers:
+		for _i in repeats:
+			goals_.append(goal)
 
 
 func disrupt() -> void:
-	active = false
+	if active:
+		active = false
+		#print(Global.num.index.shot)
 	
-	if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
-		statistics_collection()
-		
-		if Global.num.index.iteration == 10:
-			Global.num.index.weapon += 1
-			Global.num.index.iteration = 0
-			
-			if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
-				var weapon = Global.dict.weapon.title.keys()[Global.num.index.weapon]
-				equip_weapon(weapon)
-		
-		target.reset()
-	else:
-		Global.save_statistics(self)
+		if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
+			statistics_collection()
+
+			if Global.num.index.iteration == 10:
+				Global.num.index.weapon += 1
+				Global.num.index.iteration = 0
+
+				if Global.num.index.weapon < Global.dict.weapon.title.keys().size():
+					var weapon = Global.dict.weapon.title.keys()[Global.num.index.weapon]
+					equip_weapon(weapon)
+
+			target.reset()
+		else:
+			Global.save_statistics(self)
 
 
 

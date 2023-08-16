@@ -42,40 +42,45 @@ func update_color() -> void:
 
 
 func add_value(value_: int) -> void:
-	var value = value_
-	
-	if value_ > 0:
-		value = min(value_, pb.max_value - pb.value)
-	else:
-		value = min(value_, pb.value)
+	var a = name
+	if target.mechanism.active:
+		var value = value_
 		
-		if name == "Apparatus":
-			unit.hex.target.integrity.add_value(value)
-	
-	pb.value += value
-	
-	if name == "Integrity":
-		var percentage = float(pb.value) / pb.max_value
+		if value_ > 0:
+			value = min(value_, pb.max_value - pb.value)
+		else:
+			value = min(value_, pb.value)
+			
+			if name == "Apparatus":
+				unit.hex.target.integrity.add_value(value)
 		
-		if percentage < 0.5:
-			target.mechanism.disrupt()
-	
-	if pb.value >= pb.max_value:
-		pb.value = pb.max_value
-	
-	if pb.value <= pb.min_value:
-		pb.value = pb.min_value
+		pb.value += value
 		
-		match name:
-			"Armor":
-				unit.switch_indicators()
-			"Apparatus":
-				if unit.vulnerable:
-					var vulnerable_damage = -pb.max_value * 3
-					unit.hex.target.integrity.add_value(vulnerable_damage)
-			"Integrity":
-					target.mechanism.disrupt()
-	
-	if name != "Integrity":
-		label.text = str(pb.value)
+		if name == "Integrity":
+			var percentage = float(pb.value) / pb.max_value
+			
+			if percentage < 0.5:
+				target.mechanism.disrupt()
+		
+		if pb.value >= pb.max_value:
+			pb.value = pb.max_value
+		
+		if pb.value <= pb.min_value:
+			pb.value = pb.min_value
+			
+			match name:
+				"Armor":
+					unit.switch_indicators()
+				"Apparatus":
+					if unit.vulnerable:
+						var vulnerable_damage = -pb.max_value * 3
+						unit.hex.target.integrity.add_value(vulnerable_damage)
+						
+						if unit.marker:
+							unit.marker = false
+				"Integrity":
+						target.mechanism.disrupt()
+		
+		if name != "Integrity":
+			label.text = str(pb.value)
 

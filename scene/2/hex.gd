@@ -10,7 +10,9 @@ var ring = null
 var grid = null
 var neighbors = {}
 
-func _ready() -> void:
+
+func init(target_: MarginContainer) -> void:
+	target = target_
 	set_vertexs()
 
 

@@ -1,7 +1,6 @@
 extends MarginContainer
 
 
-@onready var pb = $ProgressBar
 @onready var mechanisms = $VBox/Mechanisms
 @onready var remoteness = $VBox/Remoteness
 

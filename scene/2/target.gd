@@ -44,8 +44,8 @@ func init_units() -> void:
 
 func add_hex(grid_: Vector3) -> void:
 	var hex = Global.scene.hex.instantiate()
+	hex.init(self)
 	hexs.add_child(hex)
-	hex.target = self
 	var unit = hex.unit
 	hex.grid = grid_
 	grids[hex.grid] = hex
@@ -168,5 +168,8 @@ func reset() -> void:
 		
 		if hex.unit.vulnerable:
 			vulnerabilities.append(hex)
+		
+		if hex.unit.marker:
+			hex.unit.marker = false
 	
 	integrity.pb.value = int(integrity.pb.max_value)

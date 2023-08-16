@@ -9,6 +9,8 @@ extends MarginContainer
 var hex = null
 var vulnerable = false
 var thickness = null
+var splinters = {}
+var marker = false
 
 
 func _ready():
@@ -17,8 +19,10 @@ func _ready():
 	
 	hex = get_parent()
 	armor.unit = self
-	apparatus.unit = self
+	armor.target = hex.target
 	armor.update_color()
+	apparatus.unit = self
+	apparatus.target = hex.target
 	apparatus.update_color()
 	update_size()
 
